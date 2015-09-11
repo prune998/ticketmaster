@@ -1,0 +1,3 @@
+{"type": "multiple","keys": [3],"result": "fizz"}
+{"type": "multiple","keys": [5],"result": "buzz"}
+{"type": "multiple","keys": [3,5],"result": "fizzbuzz"}
