@@ -65,17 +65,23 @@ def multiple_rule(number, keys):
 
 def process_rules(number,rules):
   rule_result=number
+  rule_matched = False
 
   for rule in rules:
     if rule['type'] == "multiple":
       if multiple_rule(number,rule["keys"]):
        rule_result = rule["result"]
+       rule_matched = True
 
-  return rule_result 
+  return (rule_result, rule_matched)
 
+  
 # start the main program
 if __name__ == '__main__':
 
+  # init some variables
+  result_counter={}
+  result_counter["integer"] = 0
   # parse command line
   (range_start, range_end, rule_file) = parse_cmdline(sys.argv)
 
@@ -84,5 +90,19 @@ if __name__ == '__main__':
 
   # loop through the range
   for number in range(range_start,range_end + 1):
-    result = process_rules(number,rules)
+    result,status = process_rules(number,rules)
     print result,
+
+    # store result count
+    if status:
+      if result in result_counter.keys():
+        result_counter[result] += 1
+      else:
+        result_counter[result] = 1
+    else :
+      result_counter["integer"] += 1
+
+  print ("\n")
+
+  for value in result_counter:
+    print ("%s: %s" % (value,result_counter[value]))
